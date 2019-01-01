@@ -1,6 +1,6 @@
 package pl.bartlomiej.codewars;
 
-
+import java.util.ArrayList;
 
 public class Palindromes {
 
@@ -12,37 +12,44 @@ public class Palindromes {
 
         } else {
 
+            StringBuilder stringBuilder = new StringBuilder();
 
-            String longest = s.substring(0, 1);
+            ArrayList<String> arrayList = new ArrayList<>();
 
-            for (int i = 0; i < s.length() - 1; i++) {
+            String toArray;
 
-                String palindrome = intermediatePalindrome(s, i, i);
-                if (palindrome.length() > longest.length()) {
-                    longest = palindrome;
+            for (int i = 0; i < s.length(); i++) {
+
+                for (int j = 0; j < s.length() - i; j++) {
+
+                    toArray = String.valueOf(stringBuilder.append(s.charAt(i + j)));
+
+                    arrayList.add(toArray);
                 }
 
-                palindrome = intermediatePalindrome(s, i, i + 1);
-                if (palindrome.length() > longest.length()) {
-                    longest = palindrome;
+                stringBuilder = new StringBuilder();
+
+            }
+
+            String longest = "";
+
+            for (int i = 0; i < arrayList.size(); i++) {
+                StringBuilder revers = new StringBuilder();
+                revers.append(arrayList.get(i));
+                String findReverse = String.valueOf(revers.reverse());
+                if ((arrayList.get(i)).equals(findReverse)) {
+
+                    if (longest.length() < arrayList.get(i).length())
+                        longest = arrayList.get(i);
+
                 }
+
+
             }
 
             return longest.length();
-
         }
 
-    }
-
-
-    static public String intermediatePalindrome(String s, int left, int right) {
-        if (left > right) return null;
-        while (left >= 0 && right < s.length()
-                && s.charAt(left) == s.charAt(right)) {
-            left--;
-            right++;
-        }
-        return s.substring(left + 1, right);
     }
 
 }
